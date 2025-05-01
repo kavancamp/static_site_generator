@@ -1,36 +1,57 @@
 import unittest
-from htmlnode import HTMLNode  
+from htmlnode import HTMLNode
+from leafnode import LeafNode
 
 class TestHTMLNode(unittest.TestCase):
-
-    def test_props_to_html_single_attr(self):
-        node = HTMLNode("a", "Link", props={"href": "https://example.com"})
-        expected = 'href="https://example.com"'
-        actual = node.props_to_html()
+    def test_to_html_props(self):
+        node = HTMLNode(
+            "div",
+            "Hello, world!",
+            None,
+            {"class": "greeting", "href": "https://boot.dev"},
+        )
         self.assertEqual(
-            actual, expected,
-            f"\nFailed Single Attribute Test:\nExpected: {repr(expected)}\nGot:      {repr(actual)}"
+            node.props_to_html(),
+            ' class="greeting" href="https://boot.dev"',
         )
 
-    def test_props_to_html_multiple_attrs(self):
-        node = HTMLNode("a", "Click", props={"target": "_blank", "href": "https://google.com"})
-        expected = 'href="https://google.com" target="_blank"'  # assuming sorted keys
-        actual = node.props_to_html()
+
+    def test_values(self):
+        node = HTMLNode(
+            "div", 
+            "I wish I could read"
+            )
         self.assertEqual(
-            actual, expected,
-            f"\nFailed Multiple Attributes Test:\nExpected: {repr(expected)}\nGot:      {repr(actual)}"
+            node.tag, "div", 
+            f"Expected: 'div', Got: {node.tag}")
+
+
+    def test_repr(self):
+        node = HTMLNode("p", "What a strange world", None, {"class": "primary"})
+        expected = "HTMLNode(p, What a strange world, children: None, {'class': 'primary'})"
+        actual = node.__repr__()
+        self.assertEqual(
+            actual,
+            expected,
+            f"Expected: {expected}, Got: {actual}"
         )
 
-    def test_props_to_html_empty(self):
-        node = HTMLNode("p", "Text", props={})
-        expected = ''
-        actual = node.props_to_html()
+    def test_leaf_to_html_p(self):
+        node = LeafNode("p", "Hello, world!")
+        expected = "<p>Hello, world!</p>"
+        actual = node.to_html()
         self.assertEqual(
-            actual, expected,
-            f"\nFailed Empty Props Test:\nExpected: {repr(expected)}\nGot:      {repr(actual)}"
+            actual,
+            expected,
+            f"Expected: {expected}, Got: {actual}"
         )
-    
+
+    def test_leaf_to_html_a(self):
+        node = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
+        self.assertEqual(
+            node.to_html(),
+            '<a href="https://www.google.com">Click me!</a>',
+        )
+
 if __name__ == "__main__":
-    unittest.main()
-    
-
+    unittest.main(verbosity=2)
