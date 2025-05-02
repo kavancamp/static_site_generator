@@ -1,6 +1,7 @@
 import unittest
-
-from textnode import TextNode, TextType
+from leafnode import *
+from textnode import *
+from enum import Enum
 
 
 class TestTextNode(unittest.TestCase):
@@ -29,5 +30,11 @@ class TestTextNode(unittest.TestCase):
         node2 = TextNode("hello", TextType.CODE, None)
         self.assertEqual(node, node2, "Default URL None should result in equal TextNodes")
 
+    def test_text(self):
+        node = TextNode("This is a text node", TextType.TEXT)
+        html_node = text_node_to_html_node(node)
+        self.assertEqual(html_node.tag, None)
+        self.assertEqual(html_node.value, "This is a text node")
+    
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
