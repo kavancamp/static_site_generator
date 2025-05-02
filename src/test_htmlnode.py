@@ -23,8 +23,8 @@ class TestHTMLNode(unittest.TestCase):
             )
         self.assertEqual(
             node.tag, "div", 
-            f"Expected: 'div', Got: {node.tag}")
-
+            #f"Expected: 'div', Got: {node.tag}")
+        )
 
     def test_repr(self):
         node = HTMLNode("p", "What a strange world", None, {"class": "primary"})
@@ -33,7 +33,7 @@ class TestHTMLNode(unittest.TestCase):
         self.assertEqual(
             actual,
             expected,
-            f"Expected: {expected}, Got: {actual}"
+            #f"Expected: {expected}, Got: {actual}"
         )
 
     def test_leaf_to_html_p(self):
@@ -43,7 +43,7 @@ class TestHTMLNode(unittest.TestCase):
         self.assertEqual(
             actual,
             expected,
-            f"Expected: {expected}, Got: {actual}"
+            #f"Expected: {expected}, Got: {actual}
         )
 
     def test_leaf_to_html_a(self):
@@ -54,4 +54,4 @@ class TestHTMLNode(unittest.TestCase):
         )
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    unittest.main()
