@@ -21,7 +21,6 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
             node.to_html(),
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff</code></pre></div>"
         )
-
         
     def test_unordered_list(self):
         markdown = "- Item 1\n- Item 2"
@@ -45,6 +44,6 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
         self.assertEqual(quote_node.tag, "blockquote")
         self.assertEqual(quote_node.to_html(), "<blockquote>quoted text</blockquote>")
     
-
+    
 if __name__ == "__main__":
     unittest.main()
