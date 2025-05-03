@@ -1,8 +1,5 @@
 import unittest
-from leafnode import *
 from textnode import *
-from enum import Enum
-
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
