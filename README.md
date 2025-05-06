@@ -1,4 +1,4 @@
-# My Static Site Generator
+# Static Site Generator
 
 This project is a lightweight static site generator written in Python. It converts Markdown files into HTML using a custom template and builds the output into the `docs/` directory, ready to deploy with GitHub Pages.
 
