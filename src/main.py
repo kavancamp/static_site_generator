@@ -1,5 +1,4 @@
-import os
-import re
+import sys
 from pathlib import Path
 
 from generate_page import generate_page
@@ -10,7 +9,7 @@ def delete_public_dir():
     if public_dir.exists() and public_dir.is_dir():
         rmtree(public_dir)
         print("Deleted existing public/ directory")
-
+        
 def copy_static_to_public(static_dir="static", public_dir="public"):
     static_dir = Path(static_dir)
     public_dir = Path(public_dir)
@@ -25,16 +24,37 @@ def copy_static_to_public(static_dir="static", public_dir="public"):
             dest_path.parent.mkdir(parents=True, exist_ok=True)
             copy2(path, dest_path)
             print(f"Copied {path} to {dest_path}")
+            
+def generate_all_pages(content_dir="content", template_path="template.html", output_dir="public", base_path="/"):
+    content_dir = Path(content_dir)
+    template_path = Path(template_path)
+    output_dir = Path(output_dir)
 
+    for path in content_dir.rglob("*.md"):
+        relative_path = path.relative_to(content_dir)
+        output_path = output_dir / relative_path.with_suffix(".html")
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        print(f"Generating {output_path} from {path}")
+        generate_page(path, template_path, output_path, base_path)
+        
+def copy_content_assets(content_dir="content", public_dir="public"):
+    content_dir = Path(content_dir)
+    public_dir = Path(public_dir)
+
+    for path in content_dir.rglob("*"):
+        if path.suffix.lower() in [".jpg", ".png", ".jpeg", ".gif"]:
+            relative_path = path.relative_to(content_dir)
+            dest_path = public_dir / relative_path
+            dest_path.parent.mkdir(parents=True, exist_ok=True)
+            copy2(path, dest_path)
+            print(f"Copied image asset {path} to {dest_path}")
 def main():
+    base_path = sys.argv[1] if len(sys.argv) > 1 else "/"
     delete_public_dir()
+    copy_content_assets()
     copy_static_to_public()
-
-    generate_page(
-        from_path=Path("content/index.md"),
-        template_path=Path("template.html"),
-        dest_path=Path("public/index.html")
-    )
-
+    generate_all_pages(base_path=base_path)
+    
 if __name__ == "__main__":
     main()
