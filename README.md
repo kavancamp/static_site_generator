@@ -24,7 +24,7 @@ This project is a lightweight static site generator written in Python. It conver
 ⚙️ GitHub Pages Deployment
 This project is configured to deploy from the docs/ directory on the main branch using GitHub Pages.
 
-##📁 Project Structure
+## 📁 Project Structure
 <pre>
 static_site_generator/
 .
